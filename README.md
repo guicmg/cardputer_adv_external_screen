@@ -1,4 +1,4 @@
-🖥️ M5Stack Cardputer + ILI9341 Dual Display
+🖥️➕🖥️ Dual display setup for M5Stack Cardputer
 
 https://docs.m5stack.com/en/core/Cardputer-Adv
 https://www.espressif.com/en/products/socs/esp32-s3
