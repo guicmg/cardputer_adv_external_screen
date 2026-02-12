@@ -1,7 +1,9 @@
 🖥️➕🖥️ Dual display setup for M5Stack Cardputer
 
 https://docs.m5stack.com/en/core/Cardputer-Adv
+
 https://www.espressif.com/en/products/socs/esp32-s3
+
 https://www.arduino.cc/en/software
 
 *Complete guide and minimal example for using an external ILI9341 2.4" display alongside the Cardputer's built-in ST7789 screen*
@@ -25,12 +27,19 @@ Connection Table
 
 Carduter ADV		ILI9341	Function
 Pin 2	  5VIN	         VCC
+
 Pin 4	  GND	           GND	
+
 Pin 13	GPIO 5	       CS	
+
 Pin 12	GPIO 13	       RESET	
+
 Pin 14	GPIO 15	       DC	
+
 Pin 9	  GPIO 14	       MOSI	
+
 Pin 7	  GPIO 40	       SCK	
+
 Pin 6	  5VOUT	         LED
 
 🚀 Quick Start
