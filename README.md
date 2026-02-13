@@ -87,7 +87,7 @@ Card_Dual_Screen/
 │       ├── Dual_screen_test_tools.ino   
 │       └──Templete.ino
 ├── docs/
-│   └── pinout_diagram.html             # Interactive wiring guide     
+│   └── Cardputer + ILI9341 Dual Display Setup Guide.html             # Interactive wiring guide     
 ├── README.md                           # This file
 └── LICENSE                             # MIT License
 
