@@ -117,6 +117,7 @@ Email: guilhermecamargo00@gmail.com
 Who made the 3D Shell (AndyAICardputer):
 https://www.youtube.com/@AndyLong14\
 https://www.youtube.com/watch?v=-N_J1kQnoHg
+https://github.com/AndyAiCardputer/zx-spectrum-cardputer-external
 Go to his channel and subscribe :D
 
 Contributions are welcome! Please feel free to submit a Pull Request. ⭐ Star this repo if you found it helpful!
