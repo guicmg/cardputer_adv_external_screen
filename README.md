@@ -77,6 +77,7 @@ externalDisplay.setRotation(7);
 intSprite.createSprite(240, 135);   // Internal resolution
 extSprite.createSprite(320, 240);   // External resolution
 
+Project Structure
 Card_Dual_Screen/
 ├── examples/
 │   └── Dual_screen_test/
