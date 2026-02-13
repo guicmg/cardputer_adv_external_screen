@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<!-- saved from url=(0086)file:///C:/Users/Dell/OneDrive/Desktop/Card_Dual_Screen/Setup/Wiring%20Connection.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardputer + ILI9341 Dual Display Setup Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            color: #64b5f6;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 10px 5px;
+            font-weight: bold;
+        }
+
+        .badge.success { background: #51cf66; }
+        .badge.info { background: #339af0; }
+
+        .diagram-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        h2 {
+            color: #74c0fc;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #74c0fc;
+            padding-bottom: 10px;
+        }
+
+        .pinout-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        .device-box {
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            border-radius: 15px;
+            padding: 25px;
+            min-width: 280px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid #3498db;
+        }
+
+        .device-title {
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+
+        .pin {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+            transition: all 0.3s;
+        }
+
+        .pin:hover {
+            transform: translateX(5px);
+            background: rgba(0,0,0,0.5);
+        }
+
+        .pin.power { border-left-color: #e74c3c; }
+        .pin.gnd { border-left-color: #95a5a6; }
+        .pin.spi { border-left-color: #f39c12; }
+        .pin.control { border-left-color: #9b59b6; }
+
+        .pin-name {
+            font-weight: bold;
+            color: #ecf0f1;
+        }
+
+        .pin-function {
+            font-size: 0.85em;
+            color: #bdc3c7;
+        }
+
+        .connection-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .connection-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+        }
+
+        .arrow {
+            font-size: 1.5em;
+            color: #2ecc71;
+        }
+
+        .wire-color {
+            display: inline-block;
+            width: 20px;
+            height: 3px;
+            border-radius: 2px;
+            margin-right: 5px;
+        }
+
+        .wire-red { background: #e74c3c; }
+        .wire-black { background: #2c3e50; border: 1px solid #7f8c8d; }
+        .wire-yellow { background: #f1c40f; }
+        .wire-purple { background: #9b59b6; }
+        .wire-orange { background: #e67e22; }
+        .wire-blue { background: #3498db; }
+        .wire-green { background: #27ae60; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #3498db;
+        }
+
+        .info-card h3 {
+            color: #74c0fc;
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border: 1px solid #333;
+            margin: 15px 0;
+        }
+
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #569cd6; }
+        .code-block .string { color: #ce9178; }
+        .code-block .number { color: #b5cea8; }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #d35400;
+        }
+
+        .warning-box h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        th {
+            background: rgba(52, 152, 219, 0.3);
+            font-weight: bold;
+            color: #74c0fc;
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .highlight {
+            background: rgba(231, 76, 60, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+        }
+
+        .github-link {
+            display: inline-block;
+            background: #24292e;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
+            border: 2px solid #fff;
+        }
+
+        .github-link:hover {
+            background: #444;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .pinout-container {
+                flex-direction: column;
+            }
+            h1 { font-size: 1.8em; }
+        }
+    </style>
+<!--<base target="_blank">--><base href="." target="_blank">
+<style type="text/css" id="operaUserStyle"></style></head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖥️ Cardputer + ILI9341 Dual Display</h1>
+            <p class="subtitle">Complete Wiring Guide &amp; Minimal Example Code</p>
+            <span class="badge">M5Stack</span>
+            <span class="badge success">ESP32-S3</span>
+            <span class="badge info">Arduino</span>
+        </header>
+
+        <div class="diagram-section">
+            <h2>🔌 Pinout Diagram</h2>
+            <p style="text-align: center; margin-bottom: 20px; opacity: 0.9;">
+                Connect your ILI9341 2.4" display to the Cardputer ADV header pins
+            </p>
+
+            <div class="pinout-container">
+                <!-- Cardputer Side -->
+                <div class="device-box">
+                    <div class="device-title">📱 M5Stack Cardputer ADV<br><small>Header/Grove Port</small></div>
+
+                    <div class="pin power">
+                        <span class="pin-name">5VIN (Pin 2)</span>
+                        <span class="pin-function">Power Input</span>
+                    </div>
+                    <div class="pin gnd">
+                        <span class="pin-name">GND (Pin 4)</span>
+                        <span class="pin-function">Ground</span>
+                    </div>
+                    <div class="pin control">
+                        <span class="pin-name">G5 (Pin 13)</span>
+                        <span class="pin-function">CS (Chip Select)</span>
+                    </div>
+                    <div class="pin control">
+                        <span class="pin-name">G13 (Pin 12)</span>
+                        <span class="pin-function">RST (Reset)</span>
+                    </div>
+                    <div class="pin control">
+                        <span class="pin-name">G15 (Pin 14)</span>
+                        <span class="pin-function">DC (Data/Command)</span>
+                    </div>
+                    <div class="pin spi">
+                        <span class="pin-name">G14 (Pin 9)</span>
+                        <span class="pin-function">MOSI (SPI Data)</span>
+                    </div>
+                    <div class="pin spi">
+                        <span class="pin-name">G40 (Pin 7)</span>
+                        <span class="pin-function">SCK (SPI Clock)</span>
+                    </div>
+                    <div class="pin power">
+                        <span class="pin-name">5VOUT (Pin 6)</span>
+                        <span class="pin-function">LED Backlight</span>
+                    </div>
+                </div>
+
+                <!-- Connections -->
+                <div class="connection-lines">
+                    <div class="connection-line">
+                        <span class="wire-color wire-red"></span>5VIN
+                        <span class="arrow">➜</span>
+                        VCC
+                    </div>
+                    <div class="connection-line">
+                        <span class="wire-color wire-black"></span>GND
+                        <span class="arrow">➜</span>
+                        GND
+                    </div>
+                    <div class="connection-line">
+                        <span class="wire-color wire-purple"></span>G5
+                        <span class="arrow">➜</span>
+                        CS
+                    </div>
+                    <div class="connection-line">
+                        <span class="wire-color wire-blue"></span>G13
+                        <span class="arrow">➜</span>
+                        RST
+                    </div>
+                    <div class="connection-line">
+                        <span class="wire-color wire-green"></span>G15
+                        <span class="arrow">➜</span>
+                        DC
+                    </div>
+                    <div class="connection-line">
+                        <span class="wire-color wire-orange"></span>G14
+                        <span class="arrow">➜</span>
+                        MOSI
+                    </div>
+                    <div class="connection-line">
+                        <span class="wire-color wire-yellow"></span>G40
+                        <span class="arrow">➜</span>
+                        SCK
+                    </div>
+                    <div class="connection-line">
+                        <span class="wire-color wire-red"></span>5VOUT
+                        <span class="arrow">➜</span>
+                        LED
+                    </div>
+                </div>
+
+                <!-- Display Side -->
+                <div class="device-box">
+                    <div class="device-title">🖥️ ILI9341 Display<br><small>2.4" 240x320 SPI</small></div>
+
+                    <div class="pin power">
+                        <span class="pin-name">VCC</span>
+                        <span class="pin-function">5V Input</span>
+                    </div>
+                    <div class="pin gnd">
+                        <span class="pin-name">GND</span>
+                        <span class="pin-function">Ground</span>
+                    </div>
+                    <div class="pin control">
+                        <span class="pin-name">CS</span>
+                        <span class="pin-function">Chip Select</span>
+                    </div>
+                    <div class="pin control">
+                        <span class="pin-name">RESET</span>
+                        <span class="pin-function">Reset</span>
+                    </div>
+                    <div class="pin control">
+                        <span class="pin-name">DC / RS</span>
+                        <span class="pin-function">Data/Command Select</span>
+                    </div>
+                    <div class="pin spi">
+                        <span class="pin-name">SDI / MOSI</span>
+                        <span class="pin-function">SPI Data In</span>
+                    </div>
+                    <div class="pin spi">
+                        <span class="pin-name">SCK / CLK</span>
+                        <span class="pin-function">SPI Clock</span>
+                    </div>
+                    <div class="pin power">
+                        <span class="pin-name">LED / BL</span>
+                        <span class="pin-function">Backlight (3.3V/5V)</span>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <div class="diagram-section">
+            <h2>📋 Connection Table</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cardputer ADV</th>
+                        <th>Pin</th>
+                        <th>Wire Color</th>
+                        <th>ILI9341 Pin</th>
+                        <th>Function</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>5VIN</td>
+                        <td>Pin 2</td>
+                        <td><span class="wire-color wire-red"></span> Red</td>
+                        <td>VCC</td>
+                        <td>Power Supply (5V)</td>
+                    </tr>
+                    <tr>
+                        <td>GND</td>
+                        <td>Pin 4</td>
+                        <td><span class="wire-color wire-black"></span> Black</td>
+                        <td>GND</td>
+                        <td>Ground</td>
+                    </tr>
+                    <tr>
+                        <td>GPIO 5</td>
+                        <td>Pin 13</td>
+                        <td><span class="wire-color wire-purple"></span> Purple</td>
+                        <td>CS</td>
+                        <td>Chip Select (SPI)</td>
+                    </tr>
+                    <tr>
+                        <td>GPIO 13</td>
+                        <td>Pin 12</td>
+                        <td><span class="wire-color wire-blue"></span> Blue</td>
+                        <td>RESET</td>
+                        <td>Reset Signal</td>
+                    </tr>
+                    <tr>
+                        <td>GPIO 15</td>
+                        <td>Pin 14</td>
+                        <td><span class="wire-color wire-green"></span> Green</td>
+                        <td>DC/RS</td>
+                        <td>Data/Command Select</td>
+                    </tr>
+                    <tr>
+                        <td>GPIO 14</td>
+                        <td>Pin 9</td>
+                        <td><span class="wire-color wire-orange"></span> Orange</td>
+                        <td>SDI/MOSI</td>
+                        <td>SPI Data (Master Out)</td>
+                    </tr>
+                    <tr>
+                        <td>GPIO 40</td>
+                        <td>Pin 7</td>
+                        <td><span class="wire-color wire-yellow"></span> Yellow</td>
+                        <td>SCK/CLK</td>
+                        <td>SPI Clock</td>
+                    </tr>
+                    <tr>
+                        <td>5VOUT</td>
+                        <td>Pin 6</td>
+                        <td><span class="wire-color wire-red"></span> Red</td>
+                        <td>LED/BL</td>
+                        <td>Backlight Control</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="diagram-section">
+            <h2>🔧 Technical Specifications</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🖥️ Internal Display</h3>
+                    <ul>
+                        <li>Controller: <strong>ST7789</strong></li>
+                        <li>Resolution: <strong>240 x 135 pixels</strong></li>
+                        <li>Interface: <strong>SPI (dedicated)</strong></li>
+                        <li>Color Depth: <strong>16-bit (RGB565)</strong></li>
+                        <li>Driver: <strong>M5GFX (built-in)</strong></li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>🖥️ External Display</h3>
+                    <ul>
+                        <li>Controller: <strong>ILI9341</strong></li>
+                        <li>Resolution: <strong>240 x 320 pixels</strong></li>
+                        <li>Interface: <strong>SPI (shared)</strong></li>
+                        <li>Color Depth: <strong>16-bit (RGB565)</strong></li>
+                        <li>Max SPI Speed: <strong>20 MHz</strong></li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>⚡ Power Requirements</h3>
+                    <ul>
+                        <li>Operating Voltage: <strong>3.3V - 5V</strong></li>
+                        <li>Backlight Current: <strong>~50-100mA</strong></li>
+                        <li>Logic Level: <strong>3.3V (ESP32-S3)</strong></li>
+                        <li>5V Source: <strong>Pin 2 (5VIN)</strong></li>
+                        <li>Backlight: <strong>Pin 6 (5VOUT)</strong></li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>🔌 SPI Configuration</h3>
+                    <ul>
+                        <li>Host: <strong>SPI2_HOST (ESP32-S3)</strong></li>
+                        <li>Mode: <strong>0 (CPOL=0, CPHA=0)</strong></li>
+                        <li>Write Speed: <strong>20 MHz</strong></li>
+                        <li>Read Speed: <strong>16 MHz</strong></li>
+                        <li>DMA: <strong>Auto Channel</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="diagram-section">
+            <h2>💻 Critical Initialization Order</h2>
+            <p>The sequence below is <span class="highlight">MANDATORY</span> for dual display operation:</p>
+
+            <div class="code-block">
+<span class="comment">// STEP 1: Initialize Cardputer (Internal Display FIRST)</span>
+M5Cardputer.begin(cfg, <span class="keyword">true</span>);
+
+<span class="comment">// STEP 2: Initialize External ILI9341</span>
+delay(<span class="number">100</span>);  <span class="comment">// Wait for power stabilization</span>
+externalDisplay.init();
+externalDisplay.setRotation(<span class="number">7</span>);
+
+<span class="comment">// STEP 3: Create Sprite Buffers</span>
+intSprite.createSprite(<span class="number">240</span>, <span class="number">135</span>);   <span class="comment">// Internal: 240x135</span>
+extSprite.createSprite(<span class="number">320</span>, <span class="number">240</span>);   <span class="comment">// External: 320x240</span>
+            </div>
+
+            <div class="warning-box">
+                <h3>⚠️ Why Order Matters</h3>
+                <p>1. <strong>Internal First:</strong> M5GFX initializes the SPI bus and allocates DMA channels<br>
+                   2. <strong>Power Delay:</strong> External display needs ~100ms to stabilize after power-on<br>
+                   3. <strong>Sprite Last:</strong> Sprites must be created after displays are initialized</p>
+            </div>
+        </div>
+
+        <div class="diagram-section">
+            <h2>🎨 Display Rotation Reference</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rotation Value</th>
+                        <th>Orientation</th>
+                        <th>Mirror</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>Portrait (0°)</td>
+                        <td>No</td>
+                        <td>Vertical layout</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Landscape (90°)</td>
+                        <td>No</td>
+                        <td>Standard horizontal</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Portrait (180°)</td>
+                        <td>No</td>
+                        <td>Upside-down portrait</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Landscape (270°)</td>
+                        <td>No</td>
+                        <td>Reverse horizontal</td>
+                    </tr>
+                    <tr style="background: rgba(46, 204, 113, 0.2);">
+                        <td><strong>7</strong></td>
+                        <td><strong>Landscape (90°)</strong></td>
+                        <td><strong>Yes</strong></td>
+                        <td><strong>Recommended for this setup</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="diagram-section">
+            <h2>🔍 Troubleshooting</h2>
+            <div class="info-grid">
+                <div class="info-card" style="border-left-color: #e74c3c;">
+                    <h3>❌ White Screen</h3>
+                    <ul>
+                        <li>Check 5V with multimeter (~5V)</li>
+                        <li>Check all SPI connections (MOSI, SCK, CS)</li>
+                        <li>Increase initialization delay to 200ms</li>
+                    </ul>
+                </div>
+                <div class="info-card" style="border-left-color: #f39c12;">
+                    <h3>⚠️ Mirrored/Rotated</h3>
+                    <ul>
+                        <li>Try rotation values: 1, 3, 5, or 7</li>
+                        <li>Check <code>rgb_order</code> in config</li>
+                    </ul>
+                </div>
+                <div class="info-card" style="border-left-color: #3498db;">
+                    <h3>🐌 Slow Performance</h3>
+                    <ul>
+                        <li>Use sprite buffers (don't draw directly)</li>
+                        <li>Increase SPI to 40MHz (test stability)</li>
+                    </ul>
+                </div>
+                <div class="info-card" style="border-left-color: #9b59b6;">
+                    <h3>💡 No Backlight</h3>
+                    <ul>
+                        <li>Check 5VOUT connection to LED pin</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <h3>📚 Ready to use this in your project?</h3>
+            <p>Copy the code, wire according to the diagram, and enjoy dual displays!</p>
+            <a href="file:///C:/Users/Dell/OneDrive/Desktop/Card_Dual_Screen/Setup/Wiring%20Connection.html#" class="github-link">⭐ Star on GitHub</a>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
+                Created for the M5Stack Community | Cardputer ADV + ILI9341 Tutorial
+            </p>
+        </footer>
+    </div>
+
+</body></html>
