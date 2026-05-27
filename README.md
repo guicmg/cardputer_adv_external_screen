@@ -42,7 +42,7 @@ This project demonstrates how to drive two displays simultaneously on the M5Stac
 
 ## 🚀 Quick Start
 
-### Download thsi repo
+### Download this repo
 ### Wiring in docs .html file
 
 ### 1. Hardware Setup
@@ -57,7 +57,7 @@ Connect wires according to the table
 ### 3. Upload Code
 * Open `dua_screen_test.ino` in Arduino IDE
 * Select **M5Cardputer** board
-* Select your **COM por**
+* Select your **COM port**
 * **CPU Frequency:** 240mhz
 * **Flash mode:** QIO 80mhz
 * **Flash size:** 8mb
