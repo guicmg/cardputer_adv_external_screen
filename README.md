@@ -55,7 +55,7 @@ Connect wires according to the table
 * M5Unified (by M5Stack)
 
 ### 3. Upload Code
-* Open `dua_screen_test.ino` in Arduino IDE
+* Open `dual_screen_test.ino` in Arduino IDE
 * Select **M5Cardputer** board
 * Select your **COM port**
 * **CPU Frequency:** 240mhz
